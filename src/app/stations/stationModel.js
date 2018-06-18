@@ -9,12 +9,18 @@ type StationState = {
 };
 
 export type Station = {
-  uid_rad: string,
-  nama: string,
-  judul: string,
-  url: string,
+  id: string,
+  name: string,
   logo: string,
-  pendengar: string,
+  url: string,
+  status: string,
+  info: string,
+  listener: number,
+  region: string,
+  province: string,
+  country: string,
+  alias: string,
+  currentLesson: string,
 };
 
 export type Stations = Station[];
@@ -47,7 +53,9 @@ export default (apiClient: axios) => {
       ): StationState {
         return {
           ...prevState,
-          stationIds: [...stations.map(station => station.uid_rad)],
+          stationIds: [
+            ...stations.map(station => prettifyStationField(station).id),
+          ],
           status: {
             ...prevState.status,
             loading: false,
@@ -55,9 +63,10 @@ export default (apiClient: axios) => {
           },
           stationMapping: {
             ...stations.reduce((prevDetails, station) => {
+              const newStation = prettifyStationField(station);
               return {
                 ...prevDetails,
-                [station.uid_rad]: station,
+                [newStation.id]: newStation,
               };
             }, prevState.stationMapping),
           },
@@ -116,19 +125,17 @@ const parseToken = htmlString => {
   return nonce[0];
 };
 
-const prettifyStationField = stations => {
-  return stations.map(station => ({
-    id: station.uid_rad,
-    name: station.nama,
-    logo: station.logo,
-    url: station.url,
-    status: station.status,
-    info: station.info,
-    listener: station.pendengar,
-    region: station.kab,
-    province: station.prop,
-    country: station.neg,
-    alias: station.alias,
-    currentLesson: station.judul,
-  }));
-};
+const prettifyStationField = (station: any): Station => ({
+  id: station.uid_rad,
+  name: station.nama,
+  logo: station.logo,
+  url: station.url,
+  status: station.status,
+  info: station.info,
+  listener: parseInt(station.pendengar),
+  region: station.kab,
+  province: station.prop,
+  country: station.neg,
+  alias: station.alias,
+  currentLesson: station.judul,
+});

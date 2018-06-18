@@ -5,13 +5,11 @@ import {dispatch} from '@rematch/core';
 
 import {MiniAudioControl} from '../uikit';
 import type {CurrentlyPlaying} from '../audio/audioPlayerModel';
+import type {Station} from '../stations/stationModel';
 
 type Props = {
   currentlyPlaying: CurrentlyPlaying,
-  station: {
-    nama: string,
-    judul: string,
-  },
+  station: Station,
 };
 
 class CurrentlyPlayingView extends React.Component<Props> {
@@ -33,8 +31,8 @@ class CurrentlyPlayingView extends React.Component<Props> {
     if (currentlyPlaying.id) {
       return (
         <MiniAudioControl
-          title={station.nama}
-          subtitle={station.judul}
+          title={station.name}
+          subtitle={station.currentLesson}
           isPlaying={currentlyPlaying.status === 'PLAYING'}
           onPlayPause={this.handlePlayPause}
           onStop={this.handleStop}
