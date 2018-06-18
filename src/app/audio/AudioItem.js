@@ -4,16 +4,10 @@ import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {Box} from '../uikit';
+import type {Station} from '../stations/stationModel';
 
 type Props = {
-  item: {
-    uid_rad: string,
-    nama: string,
-    judul: string,
-    url: string,
-    logo: string,
-    pendengar: string,
-  },
+  item: Station,
   isActive: boolean,
   isPlaying: boolean,
   onItemPress: (audioID: string, audioUrl: string) => any,
@@ -26,7 +20,7 @@ class AudioItem extends React.Component<Props> {
       <TouchableOpacity
         activeOpacity={0.75}
         onPress={() => {
-          this.props.onItemPress(item.uid_rad, item.url);
+          this.props.onItemPress(item.id, item.url);
         }}
         style={styles.container}>
         <View style={{flexDirection: 'row', backgroundColor: '#fff'}}>
@@ -35,10 +29,10 @@ class AudioItem extends React.Component<Props> {
           </Box>
           <Box flex={1}>
             <Text style={styles.titleText} numberOfLines={1}>
-              {item.nama.toUpperCase()}
+              {item.name.toUpperCase()}
             </Text>
             <Text style={styles.subTitle} numberOfLines={2}>
-              {item.judul}
+              {item.currentLesson}
             </Text>
           </Box>
           {isActive && (
@@ -53,7 +47,7 @@ class AudioItem extends React.Component<Props> {
           <Box paddingLeft={0} justifyContent="center">
             <Icon name={'md-headset'} size={18} color={'#EA9433'} />
             <Text style={{textAlign: 'center', fontSize: 12}}>
-              {item.pendengar}
+              {item.listener}
             </Text>
           </Box>
         </View>

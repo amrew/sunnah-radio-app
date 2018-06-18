@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 
 import {SectionTitle} from '../uikit';
 import type {FetchingState} from '../common/types';
-import type {Stations} from './stationModel';
+import type {Stations, Station} from './stationModel';
 import type {CurrentlyPlaying} from '../audio/audioPlayerModel';
 import AudioItem from '../audio/AudioItem';
 
@@ -27,16 +27,16 @@ class StationsView extends React.Component<Props> {
     dispatch.audioPlayer.setAudio({audioID, audioUrl});
   }
 
-  keyExtractor = (item, index) => item.uid_rad;
+  keyExtractor = (item, index) => item.id;
 
-  renderItem = ({item}) => {
+  renderItem = ({item}: {item: Station}) => {
     const {currentlyPlaying} = this.props;
     return (
       <AudioItem
-        key={item.uid_rad}
+        key={item.id}
         item={item}
         onItemPress={this.handleItemPress}
-        isActive={item.uid_rad === currentlyPlaying.id}
+        isActive={item.id === currentlyPlaying.id}
         isPlaying={currentlyPlaying.status === 'PLAYING'}
       />
     );
