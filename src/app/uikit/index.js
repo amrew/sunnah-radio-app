@@ -1,13 +1,13 @@
 import Box from './Box';
 import Header from './Header';
-import MiniAudioControl from './MiniAudioControl';
 import Page from './Page';
 import SectionTitle from './SectionTitle';
+import Modal from './Modal';
 
 export {
   Box,
   Header,
-  MiniAudioControl,
   Page,
   SectionTitle,
+  Modal,
 };

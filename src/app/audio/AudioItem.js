@@ -9,49 +9,70 @@ import type {Station} from '../stations/stationModel';
 type Props = {
   item: Station,
   isActive: boolean,
-  isPlaying: boolean,
-  onItemPress: (audioID: string, audioUrl: string) => any,
+  isPlaying?: boolean,
+  onItemPress?: (audioID: string, audioUrl: string) => any,
+  onReadMore?: (audioID: string) => any,
 };
 
 class AudioItem extends React.Component<Props> {
+  static defaultProps = {
+    isActive: false,
+  };
+
+  handlePlayPause = () => {
+    const {item, onItemPress} = this.props;
+    onItemPress && onItemPress(item.id, item.url);
+  };
+
+  handleReadMorePress = () => {
+    const {item, onReadMore} = this.props;
+    onReadMore && onReadMore(item.id);
+  };
+
   render() {
-    const {item, isActive, isPlaying} = this.props;
+    const {item, isActive, isPlaying, onReadMore} = this.props;
     return (
-      <TouchableOpacity
-        activeOpacity={0.75}
-        onPress={() => {
-          this.props.onItemPress(item.id, item.url);
-        }}
-        style={styles.container}>
+      <View style={styles.container}>
         <View style={{flexDirection: 'row', backgroundColor: '#fff'}}>
-          <Box paddingRight={0} justifyContent="center">
-            <Image source={{uri: item.logo}} style={styles.image} />
-          </Box>
-          <Box flex={1}>
-            <Text style={styles.titleText} numberOfLines={1}>
-              {item.name.toUpperCase()}
-            </Text>
-            <Text style={styles.subTitle} numberOfLines={2}>
-              {item.currentLesson}
-            </Text>
-          </Box>
-          {isActive && (
-            <Box paddingLeft={0} justifyContent="center">
-              <Icon
-                name={isPlaying ? 'md-pause' : 'md-play'}
-                size={18}
-                color={'#EA9433'}
-              />
+          <TouchableOpacity
+            activeOpacity={0.75}
+            onPress={this.handlePlayPause}
+            style={{flex: 1, flexDirection: 'row'}}>
+            <Box paddingRight={0} justifyContent="center">
+              <Image source={{uri: item.logo}} style={styles.image} />
             </Box>
+            <Box flex={1}>
+              <Text style={styles.titleText} numberOfLines={1}>
+                {item.name.toUpperCase()}
+              </Text>
+              <Text
+                style={styles.subTitle}
+                numberOfLines={onReadMore ? 2 : null}>
+                {item.currentLesson}
+              </Text>
+            </Box>
+            {isActive && (
+              <Box paddingLeft={0} justifyContent="center">
+                <Icon
+                  name={isPlaying ? 'md-pause' : 'md-play'}
+                  size={18}
+                  color={'#EA9433'}
+                />
+              </Box>
+            )}
+          </TouchableOpacity>
+          {onReadMore && (
+            <TouchableOpacity
+              activeOpacity={0.75}
+              onPress={this.handleReadMorePress}
+              style={{justifyContent: 'center'}}>
+              <Box paddingLeft={0}>
+                <Icon name={'md-more'} size={24} color={'#212121'} />
+              </Box>
+            </TouchableOpacity>
           )}
-          <Box paddingLeft={0} justifyContent="center">
-            <Icon name={'md-headset'} size={18} color={'#EA9433'} />
-            <Text style={{textAlign: 'center', fontSize: 12}}>
-              {item.listener}
-            </Text>
-          </Box>
         </View>
-      </TouchableOpacity>
+      </View>
     );
   }
 }
@@ -59,11 +80,9 @@ class AudioItem extends React.Component<Props> {
 const styles = {
   container: {
     backgroundColor: '#fff',
-    marginVertical: 12,
-    marginHorizontal: 8,
     marginBottom: 1,
-    borderRadius: 4,
-    elevation: 1,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#ccc',
   },
   image: {
     width: 48,

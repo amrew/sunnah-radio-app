@@ -32,12 +32,11 @@ export default () => {
     const Router = createRouter({
       onStateChange: (currentRoute, prevRoute) => {
         const {screen} = currentRoute;
-        if (screen.getInitialState) {
-          screen
-            .getInitialState(currentRoute, prevRoute)
-            .then(() => {})
-            .catch(() => {});
-        }
+        const getInitialState: (any, any) => any =
+          screen.getInitialState || Promise.resolve;
+        getInitialState(currentRoute, prevRoute)
+          .then(() => {})
+          .catch(() => {});
       },
     });
     return {store, Router};

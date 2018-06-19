@@ -6,19 +6,19 @@ import Box from './Box';
 
 type Props = {
   title: string,
-  leftContent: React.Node,
+  rightContent: React.Node,
 }
 
 class Header extends React.Component<Props> {
   render() {
-    const {title, leftContent} = this.props;
+    const {title, rightContent} = this.props;
     return (
       <View style={styles.header}>
         <StatusBar backgroundColor="#D7335D" />
         <Box flex={1}>
           <Text style={styles.headerTitle}>{title}</Text>
         </Box>
-        {leftContent && <Box>{leftContent}</Box>}
+        {rightContent && <Box>{rightContent}</Box>}
       </View>
     );
   }
