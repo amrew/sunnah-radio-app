@@ -95,7 +95,7 @@ export default (apiClient: axios) => {
         try {
           // scrap `nonce` token
           const htmlString = await apiClient.get('media/player');
-          const token = parseToken(htmlString.data); // @todo: cache it later
+          const token = parseToken(htmlString); // @todo: cache token later
 
           // get stations
           const stations = await apiClient.post(
@@ -107,7 +107,7 @@ export default (apiClient: axios) => {
               },
             }
           );
-          this.successFetchStations(stations.data);
+          this.successFetchStations(stations);
         } catch (err) {
           console.log(err);
           this.failedFetchStations(err);

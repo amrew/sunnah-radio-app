@@ -1,4 +1,6 @@
 import { AppRegistry } from 'react-native';
-import Main from './src/app/Main';
+import startApp from './src/app/startApp';
 
-AppRegistry.registerComponent('SunnahRadio', () => Main);
+const RootComponent = startApp();
+
+AppRegistry.registerComponent('SunnahRadio', () => RootComponent);
