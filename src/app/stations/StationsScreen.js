@@ -20,9 +20,9 @@ class StationsScreen extends React.Component<Props> {
     };
   };
 
-  componentDidMount() {
-    dispatch.station.fetchStations();
-  }
+  static async getInitialState() {
+    return dispatch.station.fetchStations();
+  };
 
   componentWillUnmount() {
     dispatch.audioPlayer.stop();
