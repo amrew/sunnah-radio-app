@@ -12,6 +12,9 @@ import type {FetchingState} from '../common/types';
 import type {Stations, Station} from './stationModel';
 import type {CurrentlyPlaying} from '../audio/audioPlayerModel';
 import AudioItem from '../audio/AudioItem';
+import withModal from '../libs/withModal';
+import type {ModalProps} from '../libs/withModal';
+import StationDetailModal from '../stations/StationDetailModal';
 
 type Props = {
   station: {
@@ -20,12 +23,18 @@ type Props = {
   },
   currentlyPlaying: CurrentlyPlaying,
   onRefresh: () => any,
+  modal: ModalProps,
 };
 
 class StationsView extends React.Component<Props> {
   handleItemPress = (audioID, audioUrl) => {
     dispatch.audioPlayer.setAudio({audioID, audioUrl});
-  }
+  };
+
+  handleReadMore = audioID => {
+    const {modal} = this.props;
+    modal.show(<StationDetailModal id={audioID} />);
+  };
 
   keyExtractor = (item, index) => item.id;
 
@@ -38,6 +47,7 @@ class StationsView extends React.Component<Props> {
         onItemPress={this.handleItemPress}
         isActive={item.id === currentlyPlaying.id}
         isPlaying={currentlyPlaying.status === 'PLAYING'}
+        onReadMore={this.handleReadMore}
       />
     );
   };
@@ -52,7 +62,7 @@ class StationsView extends React.Component<Props> {
           </View>
         )}
         <FlatList
-          ListHeaderComponent={() => <SectionTitle title="SEMUA RADIO"/>}
+          ListHeaderComponent={() => <SectionTitle title="SEMUA RADIO" />}
           data={station.items}
           keyExtractor={this.keyExtractor}
           renderItem={this.renderItem}
@@ -108,4 +118,4 @@ export default connect(({station, audioPlayer}) => {
       status: station.status,
     },
   };
-})(StationsView);
+})(withModal(StationsView));

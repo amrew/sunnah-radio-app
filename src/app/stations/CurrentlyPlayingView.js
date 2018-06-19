@@ -3,7 +3,7 @@ import * as React from 'react';
 import {connect} from 'react-redux';
 import {dispatch} from '@rematch/core';
 
-import {MiniAudioControl} from '../uikit';
+import MiniAudioControl from '../audio/MiniAudioControl';
 import type {CurrentlyPlaying} from '../audio/audioPlayerModel';
 import type {Station} from '../stations/stationModel';
 
@@ -22,10 +22,6 @@ class CurrentlyPlayingView extends React.Component<Props> {
     }
   };
 
-  handleStop = () => {
-    dispatch.audioPlayer.stop();
-  };
-
   render() {
     const {currentlyPlaying, station} = this.props;
     if (currentlyPlaying.id) {
@@ -35,7 +31,7 @@ class CurrentlyPlayingView extends React.Component<Props> {
           subtitle={station.currentLesson}
           isPlaying={currentlyPlaying.status === 'PLAYING'}
           onPlayPause={this.handlePlayPause}
-          onStop={this.handleStop}
+          onDetailPress={() => {}}
         />
       );
     }

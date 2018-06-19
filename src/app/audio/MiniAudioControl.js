@@ -3,7 +3,7 @@ import * as React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import Box from './Box';
+import {Box} from '../uikit';
 
 type Props = {
   title: string,
@@ -19,7 +19,7 @@ class MiniAudioControl extends React.Component<Props> {
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this.props.onPlayPause}>
-          <Box paddingRight={0}>
+          <Box>
             <Icon
               name={isPlaying ? 'ios-pause' : 'ios-play'}
               color="#F15945"

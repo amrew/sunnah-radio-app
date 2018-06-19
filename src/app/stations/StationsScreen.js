@@ -22,7 +22,7 @@ class StationsScreen extends React.Component<Props> {
 
   static async getInitialState() {
     return dispatch.station.fetchStations();
-  };
+  }
 
   componentWillUnmount() {
     dispatch.audioPlayer.stop();
@@ -37,7 +37,7 @@ class StationsScreen extends React.Component<Props> {
       <Page>
         <Header
           title={'Radio RII'}
-          leftContent={<Icon name="md-search" color="#FFF" size={24} />}
+          rightContent={<Icon name="md-search" color="#FFF" size={24} />}
         />
         <CurrentlyPlayingView />
         <StationsView onRefresh={this.handleRefreshStations} />
