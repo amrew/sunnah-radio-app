@@ -6,10 +6,14 @@ import {dispatch} from '@rematch/core';
 import MiniAudioControl from '../audio/MiniAudioControl';
 import type {CurrentlyPlaying} from '../audio/audioPlayerModel';
 import type {Station} from '../stations/stationModel';
+import {withNavigation} from 'react-navigation';
 
 type Props = {
   currentlyPlaying: CurrentlyPlaying,
   station: Station,
+  navigation: {
+    navigate: (key: string, params: any) => any,
+  },
 };
 
 class CurrentlyPlayingView extends React.Component<Props> {
@@ -22,6 +26,11 @@ class CurrentlyPlayingView extends React.Component<Props> {
     }
   };
 
+  handleDetailPress = id => {
+    const {navigation, currentlyPlaying} = this.props;
+    navigation.navigate('StationDetail', {id: currentlyPlaying.id});
+  };
+
   render() {
     const {currentlyPlaying, station} = this.props;
     if (currentlyPlaying.id) {
@@ -29,9 +38,9 @@ class CurrentlyPlayingView extends React.Component<Props> {
         <MiniAudioControl
           title={station.name}
           subtitle={station.currentLesson}
-          isPlaying={currentlyPlaying.status === 'PLAYING'}
+          status={currentlyPlaying.status}
           onPlayPause={this.handlePlayPause}
-          onDetailPress={() => {}}
+          onDetailPress={this.handleDetailPress}
         />
       );
     }
@@ -42,4 +51,4 @@ class CurrentlyPlayingView extends React.Component<Props> {
 export default connect(({audioPlayer, station}) => ({
   currentlyPlaying: audioPlayer.currentlyPlaying,
   station: station.stationMapping[audioPlayer.currentlyPlaying.id] || {},
-}))(CurrentlyPlayingView);
+}))(withNavigation(CurrentlyPlayingView));

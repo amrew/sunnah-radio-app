@@ -2,31 +2,27 @@
 import * as React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import PlayPauseButton from './PlayPauseButton';
 
 import {Box} from '../uikit';
 
 type Props = {
   title: string,
   subtitle: string,
-  isPlaying: boolean,
+  status: string,
   onPlayPause: () => any,
   onDetailPress: () => any,
 };
 
 class MiniAudioControl extends React.Component<Props> {
   render() {
-    const {title, subtitle, isPlaying} = this.props;
+    const {title, subtitle, status} = this.props;
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.props.onPlayPause}>
-          <Box>
-            <Icon
-              name={isPlaying ? 'ios-pause' : 'ios-play'}
-              color="#F15945"
-              size={24}
-            />
-          </Box>
-        </TouchableOpacity>
+        <PlayPauseButton
+          status={status}
+          onPlayPause={this.props.onPlayPause}
+        />
         <TouchableOpacity
           style={{flexDirection: 'row', flex: 1}}
           activeOpacity={0.7}
