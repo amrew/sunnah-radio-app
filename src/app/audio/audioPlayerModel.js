@@ -77,14 +77,6 @@ export default () => {
           audioPlayer: {currentlyPlaying, hasEventListener},
         } = rootState;
 
-        const isPlaying = currentlyPlaying.status === 'PLAYING';
-        const isPaused = currentlyPlaying.status === 'PAUSED';
-
-        if (currentlyPlaying.id === audioID) {
-          if (isPlaying) return RNAudioStreamer.pause();
-          else if (isPaused) return RNAudioStreamer.play();
-        }
-
         if (!hasEventListener) {
           DeviceEventEmitter.addListener(
             'RNAudioStreamerStatusChanged',
@@ -108,8 +100,8 @@ export default () => {
       },
 
       async stop() {
-        DeviceEventEmitter.removeAllListeners();
         RNAudioStreamer.pause();
+        DeviceEventEmitter.removeAllListeners();
         this.setActiveAudio(null);
       },
     },

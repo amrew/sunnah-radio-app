@@ -2,15 +2,37 @@
  * @flow
  */
 import React from 'react';
-import {createBottomTabNavigator} from 'react-navigation';
+import {InteractionManager} from 'react-native';
+import {createBottomTabNavigator, createStackNavigator} from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import StationsScreen from './stations/StationsScreen';
+import StationDetailScreen from './stations/StationDetailScreen';
 import SettingsScreen from './settings/SettingsScreen';
+
+const StationNavigator = createStackNavigator(
+  {
+    Stations: StationsScreen,
+    StationDetail: StationDetailScreen,
+  },
+  {
+    headerMode: 'none',
+  }
+);
+
+StationNavigator.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+  return {
+    tabBarVisible,
+  };
+};
 
 const AppNavigator = createBottomTabNavigator(
   {
-    Stations: StationsScreen,
+    Stations: StationNavigator,
     Settings: SettingsScreen,
   },
   {
@@ -43,21 +65,18 @@ const AppNavigator = createBottomTabNavigator(
   }
 );
 
-const {
-  router: {getComponentForRouteName},
-} = AppNavigator;
-
 // gets the current screen from navigation state
-const getActiveRoute = navigationState => {
+const getActiveRoute = (navigationState, router) => {
   if (!navigationState) {
     return null;
   }
   const route = navigationState.routes[navigationState.index];
-  // dive into nested navigators
+  const {getComponentForRouteName} = router;
+  const screen = getComponentForRouteName(route.routeName);
   if (route.routes) {
-    return getActiveRoute(route);
+    return getActiveRoute(route, screen.router);
   }
-  return {...route, screen: getComponentForRouteName(route.routeName)};
+  return {...route, screen};
 };
 
 type RouterConfig = {
@@ -67,10 +86,12 @@ type RouterConfig = {
 export default (routerConfig: RouterConfig) => {
   return class Router extends React.Component<{}> {
     navigator: any;
+    isTransitioning: boolean;
 
     componentDidMount() {
       const {nav} = this.navigator.state;
-      const currentRoute = getActiveRoute(nav);
+      const {router} = AppNavigator;
+      const currentRoute = getActiveRoute(nav, router);
       routerConfig.onStateChange(currentRoute, null);
     }
 
@@ -79,9 +100,16 @@ export default (routerConfig: RouterConfig) => {
         <AppNavigator
           ref={navigator => (this.navigator = navigator)}
           onNavigationStateChange={(prevState, currentState) => {
-            const currentRoute = getActiveRoute(currentState);
-            const prevRoute = getActiveRoute(prevState);
-            routerConfig.onStateChange(currentRoute, prevRoute);
+            const {router} = AppNavigator;
+            const currentRoute = getActiveRoute(currentState, router);
+            const prevRoute = getActiveRoute(prevState, router);
+            if (!this.isTransitioning) {
+              this.isTransitioning = true;
+              routerConfig.onStateChange(currentRoute, prevRoute);
+              InteractionManager.runAfterInteractions(() => {
+                this.isTransitioning = false;
+              });
+            }
           }}
         />
       );

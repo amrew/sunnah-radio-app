@@ -9,7 +9,6 @@ import type {Station} from '../stations/stationModel';
 type Props = {
   item: Station,
   isActive: boolean,
-  isPlaying?: boolean,
   onItemPress?: (audioID: string, audioUrl: string) => any,
   onReadMore?: (audioID: string) => any,
 };
@@ -30,14 +29,14 @@ class AudioItem extends React.Component<Props> {
   };
 
   render() {
-    const {item, isActive, isPlaying, onReadMore} = this.props;
+    const {item, isActive, onReadMore} = this.props;
     return (
       <View style={styles.container}>
         <View style={{flexDirection: 'row', backgroundColor: '#fff'}}>
           <TouchableOpacity
             activeOpacity={0.75}
             onPress={this.handlePlayPause}
-            style={{flex: 1, flexDirection: 'row'}}>
+            style={styles.descriptionArea}>
             <Box paddingRight={0} justifyContent="center">
               <Image source={{uri: item.logo}} style={styles.image} />
             </Box>
@@ -52,9 +51,9 @@ class AudioItem extends React.Component<Props> {
               </Text>
             </Box>
             {isActive && (
-              <Box paddingLeft={0} justifyContent="center">
+              <Box justifyContent="center">
                 <Icon
-                  name={isPlaying ? 'md-pause' : 'md-play'}
+                  name={'md-pulse'}
                   size={18}
                   color={'#EA9433'}
                 />
@@ -66,7 +65,7 @@ class AudioItem extends React.Component<Props> {
               activeOpacity={0.75}
               onPress={this.handleReadMorePress}
               style={{justifyContent: 'center'}}>
-              <Box paddingLeft={0}>
+              <Box>
                 <Icon name={'md-more'} size={24} color={'#212121'} />
               </Box>
             </TouchableOpacity>
@@ -83,6 +82,10 @@ const styles = {
     marginBottom: 1,
     borderBottomWidth: 0.5,
     borderBottomColor: '#ccc',
+  },
+  descriptionArea: {
+    flex: 1, 
+    flexDirection: 'row'
   },
   image: {
     width: 48,

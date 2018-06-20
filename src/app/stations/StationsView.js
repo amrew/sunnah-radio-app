@@ -33,6 +33,7 @@ class StationsView extends React.Component<Props> {
 
   handleReadMore = audioID => {
     const {modal} = this.props;
+    const {currentlyPlaying} = this.props;
     modal.show(<StationDetailModal id={audioID} />);
   };
 
@@ -46,7 +47,6 @@ class StationsView extends React.Component<Props> {
         item={item}
         onItemPress={this.handleItemPress}
         isActive={item.id === currentlyPlaying.id}
-        isPlaying={currentlyPlaying.status === 'PLAYING'}
         onReadMore={this.handleReadMore}
       />
     );
