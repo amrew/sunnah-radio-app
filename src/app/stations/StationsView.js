@@ -55,21 +55,24 @@ class StationsView extends React.Component<Props> {
   render() {
     const {station} = this.props;
     return (
-      <React.Fragment>
-        {station.status.error && (
-          <View key={'error'} style={styles.rowHeadLight}>
-            <Text style={styles.textHeadLight}>Error...</Text>
-          </View>
+      <FlatList
+        style={{flex: 1}}
+        ListHeaderComponent={() => (
+          <React.Fragment>
+            <SectionTitle title="SEMUA RADIO" />
+            {station.status.error && (
+              <View key={'error'} style={styles.rowHeadLight}>
+                <Text style={styles.textHeadLight}>Error...</Text>
+              </View>
+            )}
+          </React.Fragment>
         )}
-        <FlatList
-          ListHeaderComponent={() => <SectionTitle title="SEMUA RADIO" />}
-          data={station.items}
-          keyExtractor={this.keyExtractor}
-          renderItem={this.renderItem}
-          refreshing={!!station.status.loading}
-          onRefresh={this.props.onRefresh}
-        />
-      </React.Fragment>
+        data={station.items}
+        keyExtractor={this.keyExtractor}
+        renderItem={this.renderItem}
+        refreshing={!!station.status.loading}
+        onRefresh={this.props.onRefresh}
+      />
     );
   }
 }

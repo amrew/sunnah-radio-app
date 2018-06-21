@@ -55,7 +55,7 @@ class AudioItem extends React.Component<Props> {
                 <Icon
                   name={'md-pulse'}
                   size={18}
-                  color={'#EA9433'}
+                  color={'#EDAD61'}
                 />
               </Box>
             )}
@@ -66,7 +66,7 @@ class AudioItem extends React.Component<Props> {
               onPress={this.handleReadMorePress}
               style={{justifyContent: 'center'}}>
               <Box>
-                <Icon name={'md-more'} size={24} color={'#212121'} />
+                <Icon name={'md-more'} size={24} color={'#262630'} />
               </Box>
             </TouchableOpacity>
           )}
@@ -93,13 +93,13 @@ const styles = {
     borderRadius: 8,
   },
   titleText: {
-    color: '#333',
+    color: '#262630',
     fontSize: 16,
     fontWeight: '500',
     lineHeight: 24,
   },
   subTitle: {
-    color: '#666',
+    color: '#35455C',
     fontSize: 14,
     fontWeight: '400',
     lineHeight: 20,

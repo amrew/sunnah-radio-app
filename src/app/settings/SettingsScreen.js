@@ -12,12 +12,6 @@ import {Header, Page} from '../uikit';
 type Props = {};
 
 class SettingsScreen extends Component<Props> {
-  static navigationOptions = () => {
-    return {
-      tabBarLabel: 'PENGATURAN',
-    };
-  };
-
   render() {
     return (
       <Page>

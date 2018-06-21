@@ -3,6 +3,7 @@ import * as React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PlayPauseButton from './PlayPauseButton';
+import LinearGradient from 'react-native-linear-gradient';
 
 import {Box} from '../uikit';
 
@@ -18,7 +19,7 @@ class MiniAudioControl extends React.Component<Props> {
   render() {
     const {title, subtitle, status} = this.props;
     return (
-      <View style={styles.container}>
+      <LinearGradient colors={['#262630', '#25242e']} style={styles.container}>
         <PlayPauseButton
           status={status}
           onPlayPause={this.props.onPlayPause}
@@ -33,22 +34,21 @@ class MiniAudioControl extends React.Component<Props> {
             </Text>
           </Box>
           <Box>
-            <Icon name={'ios-arrow-forward-outline'} color="#333" size={24} />
+            <Icon name={'ios-arrow-forward-outline'} color="#a2acbe" size={24} />
           </Box>
         </TouchableOpacity>
-      </View>
+      </LinearGradient>
     );
   }
 }
 
 const styles = {
   container: {
-    backgroundColor: '#FFF',
     flexDirection: 'row',
     elevation: 3,
   },
   audioTitle: {
-    color: '#333',
+    color: '#a2acbe',
     fontSize: 14,
     lineHeight: 24,
   },

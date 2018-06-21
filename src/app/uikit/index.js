@@ -3,6 +3,7 @@ import Header from './Header';
 import Page from './Page';
 import SectionTitle from './SectionTitle';
 import Modal from './Modal';
+import Link from './Link';
 
 export {
   Box,
@@ -10,4 +11,5 @@ export {
   Page,
   SectionTitle,
   Modal,
+  Link,
 };

@@ -39,6 +39,7 @@ export default () => {
             ...prevState.currentlyPlaying,
             status,
           },
+          hasEventListener: true,
         };
       },
       setActiveAudio(
@@ -63,7 +64,6 @@ export default () => {
             id: audioID,
             url: audioUrl,
           },
-          hasEventListener: true,
         };
       },
     },

@@ -36,7 +36,6 @@ export default () => {
           screen.getInitialState || Promise.resolve;
         getInitialState(currentRoute, prevRoute)
           .then(() => {
-            console.log(currentRoute, prevRoute)
           })
           .catch(() => {});
       },
