@@ -43,7 +43,7 @@ export default (apiClient: axios) => {
             ...prevState.status,
             loading: true,
             loaded: !!prevState.status.loaded && !shouldRefresh,
-            error: shouldRefresh ? null : prevState.status.error,
+            error: null,
           },
         };
       },

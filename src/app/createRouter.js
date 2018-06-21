@@ -2,9 +2,11 @@
  * @flow
  */
 import React from 'react';
-import {InteractionManager} from 'react-native';
-import {createBottomTabNavigator, createStackNavigator} from 'react-navigation';
+import {InteractionManager, Text} from 'react-native';
+import {createDrawerNavigator, createStackNavigator} from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
+
+import DrawerView from './common/DrawerView';
 
 import StationsScreen from './stations/StationsScreen';
 import StationDetailScreen from './stations/StationDetailScreen';
@@ -14,53 +16,56 @@ const StationNavigator = createStackNavigator(
   {
     Stations: StationsScreen,
     StationDetail: StationDetailScreen,
+    Settings: SettingsScreen,
   },
   {
     headerMode: 'none',
   }
 );
 
-StationNavigator.navigationOptions = ({ navigation }) => {
-  let tabBarVisible = true;
+StationNavigator.navigationOptions = ({navigation}) => {
+  let drawerLockMode = 'unlocked';
   if (navigation.state.index > 0) {
-    tabBarVisible = false;
+    drawerLockMode = 'locked-closed';
   }
   return {
-    tabBarVisible,
+    drawerLockMode,
+    title: 'Radio Streaming',
+    drawerIcon: ({focused}) => {
+      return (
+        <Icon
+          name={'md-microphone'}
+          color={focused ? '#29718F' : '#35455C'}
+          size={24}
+        />
+      );
+    },
   };
 };
 
-const AppNavigator = createBottomTabNavigator(
+const AppNavigator = createDrawerNavigator(
   {
     Stations: StationNavigator,
-    Settings: SettingsScreen,
+    Settings: {
+      screen: SettingsScreen,
+      navigationOptions: {
+        drawerIcon: ({focused}) => {
+          return (
+            <Icon
+              name={'md-settings'}
+              color={focused ? '#29718F' : '#35455C'}
+              size={24}
+            />
+          );
+        },
+      },
+    },
   },
   {
-    navigationOptions: ({navigation}) => ({
-      tabBarIcon: ({focused, tintColor}) => {
-        const {routeName} = navigation.state;
-        let iconName;
-        if (routeName === 'Stations') {
-          iconName = 'md-microphone';
-        } else if (routeName === 'Settings') {
-          iconName = 'md-settings';
-        }
-        return (
-          <Icon
-            name={iconName}
-            size={24}
-            color={focused ? '#FFF' : 'rgba(255, 255, 255, .7)'}
-          />
-        );
-      },
-    }),
-    tabBarOptions: {
-      activeTintColor: '#FFF',
-      inactiveTintColor: 'rgba(255, 255, 255, .8)',
-      style: {
-        backgroundColor: '#cc2f58',
-        height: 54,
-      },
+    contentComponent: DrawerView,
+    contentOptions: {
+      activeTintColor: '#29718F',
+      inactiveTintColor: '#35455C',
     },
   }
 );

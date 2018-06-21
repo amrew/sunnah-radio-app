@@ -8,7 +8,7 @@ type Props = {
 
 class Page extends React.Component<Props> {
   render() {
-    return <View>{this.props.children}</View>;
+    return <View style={styles.container}>{this.props.children}</View>;
   }
 }
 

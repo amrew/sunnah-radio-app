@@ -19,7 +19,7 @@ class SectionTitle extends React.Component<Props> {
 const styles = {
   container: {
     padding: 24,
-    backgroundColor: '#212121',
+    backgroundColor: '#35455C',
   },
   titleText: {
     color: '#FFF',
