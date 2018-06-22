@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "run-android": "ENVFILE=.env react-native run-android",
-    "precommit": "lint-staged",
+    "precommit": "flow check && lint-staged",
     "test": "jest"
   },
   "dependencies": {
@@ -34,7 +34,7 @@
     "react-test-renderer": "16.3.1"
   },
   "lint-staged": {
-    "*.{js,json,css,md}": [
+    "*.{js}": [
       "prettier --write",
       "git add"
     ]
