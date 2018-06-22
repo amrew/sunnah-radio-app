@@ -3,54 +3,55 @@
  */
 declare var console: any;
 
-import * as React from 'react';
-import {View, Text, ActivityIndicator, Button} from 'react-native';
-import {init as initStore} from '@rematch/core';
-import axios from 'axios';
-import {Provider} from 'react-redux';
-import Config from 'react-native-config';
+import * as React from "react";
+import { View, Text, ActivityIndicator, Button } from "react-native";
+import { init as initStore } from "@rematch/core";
+import axios from "axios";
+import { Provider } from "react-redux";
+import Config from "react-native-config";
 
-import createRouter from './createRouter';
-import createModels from './createModels';
-import createApiClient from './createApiClient';
+import createRouter from "./createRouter";
+import createModels from "./createModels";
+import createApiClient from "./createApiClient";
 
-console.ignoredYellowBox = ['Warning: isMounted', 'Remote debugger'];
+console.ignoredYellowBox = ["Warning: isMounted", "Remote debugger"];
 
 type AppProps = {};
 
 type AppStates = {
   store: any,
   Router: any,
-  error?: ?Error,
+  error?: ?Error
 };
 
 export default () => {
   const init = () => {
-    const apiClient = createApiClient({apiEndpoint: Config.RADIO_API_ENDPOINT});
+    const apiClient = createApiClient({
+      apiEndpoint: Config.RADIO_API_ENDPOINT
+    });
     const store = initStore({
-      models: createModels(apiClient),
+      models: createModels(apiClient)
     });
     const Router = createRouter({
       onStateChange: (currentRoute, prevRoute) => {
-        const {screen} = currentRoute;
+        const { screen } = currentRoute;
         const getInitialState: (any, any) => any =
           screen.getInitialState || Promise.resolve;
         getInitialState(currentRoute, prevRoute)
-          .then(() => {
-          })
+          .then(() => {})
           .catch(() => {});
-      },
+      }
     });
-    return {store, Router};
+    return { store, Router };
   };
 
   return class App extends React.Component<AppProps, AppStates> {
     state = {
-      ...init(),
+      ...init()
     };
 
     render() {
-      const {Router} = this.state;
+      const { Router } = this.state;
       return (
         <Provider store={this.state.store}>
           <Router />
