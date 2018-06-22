@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import {View, Text, StyleSheet, StatusBar} from 'react-native';
+import {View, Text, StyleSheet, StatusBar, Platform} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import Box from './Box';
@@ -16,7 +16,11 @@ class Header extends React.Component<Props> {
     const {title, rightContent, leftContent} = this.props;
     return (
       <LinearGradient colors={['#e35150', '#e14a4a']} style={styles.header}>
-        <StatusBar backgroundColor="transparent" translucent={true} />
+        <StatusBar
+          backgroundColor="transparent"
+          translucent={true}
+          barStyle={'light-content'}
+        />
         {leftContent}
         <Box flex={1}>
           <Text style={styles.headerTitle}>{title}</Text>
@@ -27,12 +31,14 @@ class Header extends React.Component<Props> {
   }
 }
 
+const statusBarHeight = Platform.OS === 'ios' ? 24 : StatusBar.currentHeight;
+
 const styles = {
   header: {
     flexDirection: 'row',
-    height: 54 + StatusBar.currentHeight,
+    height: 54 + statusBarHeight,
     elevation: 3,
-    paddingTop: StatusBar.currentHeight
+    paddingTop: statusBarHeight,
   },
   headerTitle: {
     color: '#fff',

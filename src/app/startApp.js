@@ -8,6 +8,7 @@ import {View, Text, ActivityIndicator, Button} from 'react-native';
 import {init as initStore} from '@rematch/core';
 import axios from 'axios';
 import {Provider} from 'react-redux';
+import Config from 'react-native-config';
 
 import createRouter from './createRouter';
 import createModels from './createModels';
@@ -25,7 +26,7 @@ type AppStates = {
 
 export default () => {
   const init = () => {
-    const apiClient = createApiClient();
+    const apiClient = createApiClient({apiEndpoint: Config.RADIO_API_ENDPOINT});
     const store = initStore({
       models: createModels(apiClient),
     });
