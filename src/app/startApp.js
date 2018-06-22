@@ -26,7 +26,9 @@ type AppStates = {
 
 export default () => {
   const init = () => {
-    const apiClient = createApiClient({apiEndpoint: Config.RADIO_API_ENDPOINT});
+    const apiClient = createApiClient({
+      apiEndpoint: Config.RADIO_API_ENDPOINT,
+    });
     const store = initStore({
       models: createModels(apiClient),
     });
@@ -36,8 +38,7 @@ export default () => {
         const getInitialState: (any, any) => any =
           screen.getInitialState || Promise.resolve;
         getInitialState(currentRoute, prevRoute)
-          .then(() => {
-          })
+          .then(() => {})
           .catch(() => {});
       },
     });
