@@ -1,9 +1,9 @@
 // @flow
 import axios from 'axios';
 
-export default () => {
+export default (apiSettings: {apiEndpoint: string}) => {
   const instance = axios.create({
-    baseURL: 'http://radioislam.or.id', // @todo: get baseUrl from appSettings
+    baseURL: apiSettings.apiEndpoint, // @todo: get baseUrl from appSettings
     timeout: 5000,
   });
   instance.interceptors.response.use(

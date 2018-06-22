@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Platform} from 'react-native';
 import {
   DrawerItems,
   SafeAreaView,
@@ -44,6 +44,11 @@ class DrawerView extends React.Component<Props> {
 const styles = {
   container: {
     flex: 1,
+    ...(Platform.OS === 'ios'
+      ? {
+          marginTop: -24,
+        }
+      : null),
   },
 };
 
