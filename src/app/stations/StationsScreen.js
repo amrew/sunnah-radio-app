@@ -42,7 +42,6 @@ class StationsScreen extends React.Component<Props> {
   };
 
   render() {
-    console.log('rerender');
     return (
       <Page>
         <Header
