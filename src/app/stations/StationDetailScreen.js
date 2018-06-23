@@ -10,6 +10,7 @@ import {withNavigation} from 'react-navigation';
 
 import {Page} from '../uikit';
 import StationDetailHeader from './StationDetailHeader';
+import StationDetailView from './StationDetailView';
 
 type Props = {
   navigation: {
@@ -20,9 +21,11 @@ type Props = {
 class StationDetailScreen extends React.Component<Props> {
   render() {
     const {navigation} = this.props;
+    const stationId = navigation.getParam('id');
     return (
       <Page>
-        <StationDetailHeader id={navigation.getParam('id')} />
+        <StationDetailHeader stationId={stationId} />
+        <StationDetailView stationId={stationId} />
       </Page>
     );
   }

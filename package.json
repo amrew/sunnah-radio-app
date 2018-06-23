@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "run-android": "ENVFILE=.env react-native run-android",
+    "clean-android": "cd android && ENVFILE=.env ./gradlew clean",
     "precommit": "flow check && lint-staged",
     "test": "jest"
   },

@@ -34,10 +34,7 @@ export default (apiClient: axios, storage: Storage) => {
       status: {},
     },
     reducers: {
-      startFetchStations(
-        prevState: StationState,
-        shouldRefresh: boolean
-      ): StationState {
+      startFetchStations(prevState: StationState): StationState {
         return {
           ...prevState,
           status: {
@@ -91,27 +88,9 @@ export default (apiClient: axios, storage: Storage) => {
         if (rootState.station.status.loaded && !payload.shouldRefresh) {
           return Promise.resolve();
         }
-        this.startFetchStations(payload.shouldRefresh);
+        this.startFetchStations();
         try {
-          let token;
-          try {
-            token = await storage.load({key: 'riiToken'});
-          } catch (error) {
-            // scrap token from html string
-            const htmlString = await apiClient.get('media/player');
-            token = parseToken(htmlString);
-            storage.save({key: 'riiToken', data: token});
-          }
-          // get stations
-          const stations = await apiClient.post(
-            'wp-admin/admin-ajax.php',
-            'lang=id_ID&action=rii_data&security=' + token,
-            {
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-              },
-            }
-          );
+          const stations = await apiClient.get('radio/lrii.php?model=lima');
           this.successFetchStations(stations);
         } catch (err) {
           console.log(err);
@@ -122,14 +101,7 @@ export default (apiClient: axios, storage: Storage) => {
   };
 };
 
-// @todo: move this helper to somewhere
-
-const parseToken = htmlString => {
-  const parsedHtml = htmlString.split('nonce":"')[1];
-  const nonce = parsedHtml.split('","logo_rii"');
-  return nonce[0];
-};
-
+// let's prettify the fields
 const prettifyStationField = (station: any): Station => ({
   id: station.uid_rad,
   name: station.nama,

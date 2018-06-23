@@ -17,7 +17,6 @@ class StationDetailModal extends React.Component<Props> {
     return (
       <View style={styles.container}>
         <AudioItem item={station} />
-        <View style={styles.borderLine} />
         <View>
           <Box>
             <Text style={styles.actionText}>Jadikan Favorit</Text>

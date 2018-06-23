@@ -18,14 +18,17 @@ class PlayPauseButton extends React.Component<Props> {
     const isStopped = status === 'STOPPED';
     const isError = status === 'ERROR';
 
-    const iconName = isPlaying ? 'md-pause' : 'md-play';
+    let iconName = isPlaying ? 'md-pause' : 'md-play';
+    if (isError) {
+      iconName = 'md-alert';
+    }
     return (
       <TouchableOpacity
         onPress={this.props.onPlayPause}
         style={{justifyContent: 'center'}}>
         <Box>
-          {isPlaying || isPaused || isStopped ? (
-            <Icon name={iconName} size={18} color={'#EDAD61'} />
+          {isPlaying || isPaused || isStopped || isError ? (
+            <Icon name={iconName} size={18} color={'#FFF'} />
           ) : isBuffering ? (
             <ActivityIndicator />
           ) : null}
