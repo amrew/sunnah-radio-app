@@ -38,6 +38,7 @@ const styles = {
     bottom: 0,
     left: 0,
     right: 0,
+    overflow: 'hidden',
   },
   titleText: {
     color: '#333',

@@ -12,6 +12,7 @@ import type {FetchingState} from '../common/types';
 import type {Stations, Station} from './stationModel';
 import type {CurrentlyPlaying} from '../audio/audioPlayerModel';
 import AudioItem from '../audio/AudioItem';
+import AudioItemPlaceholder from '../audio/AudioItemPlaceholder';
 import withModal from '../libs/withModal';
 import type {ModalProps} from '../libs/withModal';
 import StationDetailModal from '../stations/StationDetailModal';
@@ -54,6 +55,18 @@ class StationsView extends React.Component<Props> {
 
   render() {
     const {station} = this.props;
+    
+    if (!station.status.loaded) {
+      return (
+        <View>
+          <SectionTitle title="SEMUA RADIO" />
+          <AudioItemPlaceholder />
+          <AudioItemPlaceholder />
+          <AudioItemPlaceholder />
+        </View>
+      );
+    }
+
     return (
       <FlatList
         style={{flex: 1}}

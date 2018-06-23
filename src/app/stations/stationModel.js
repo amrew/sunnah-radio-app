@@ -1,5 +1,6 @@
 // @flow
 import axios from 'axios';
+import Storage from 'react-native-storage';
 import type {FetchingState} from '../common/types';
 
 type StationState = {
@@ -25,7 +26,7 @@ export type Station = {
 
 export type Stations = Station[];
 
-export default (apiClient: axios) => {
+export default (apiClient: axios, storage: Storage) => {
   return {
     state: {
       stationIds: [],
@@ -42,7 +43,6 @@ export default (apiClient: axios) => {
           status: {
             ...prevState.status,
             loading: true,
-            loaded: !!prevState.status.loaded && !shouldRefresh,
             error: null,
           },
         };
@@ -93,10 +93,15 @@ export default (apiClient: axios) => {
         }
         this.startFetchStations(payload.shouldRefresh);
         try {
-          // scrap `nonce` token
-          const htmlString = await apiClient.get('media/player');
-          const token = parseToken(htmlString); // @todo: cache token later
-
+          let token;
+          try {
+            token = await storage.load({key: 'riiToken'});
+          } catch (error) {
+            // scrap token from html string
+            const htmlString = await apiClient.get('media/player');
+            token = parseToken(htmlString);
+            storage.save({key: 'riiToken', data: token});
+          }
           // get stations
           const stations = await apiClient.post(
             'wp-admin/admin-ajax.php',

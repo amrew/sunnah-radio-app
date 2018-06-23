@@ -15,7 +15,7 @@ class Header extends React.Component<Props> {
   render() {
     const {title, rightContent, leftContent} = this.props;
     return (
-      <LinearGradient colors={['#e35150', '#e14a4a']} style={styles.header}>
+      <LinearGradient colors={['#e45756', '#dd4141']} style={styles.header}>
         <StatusBar
           backgroundColor="transparent"
           translucent={true}
@@ -37,8 +37,10 @@ const styles = {
   header: {
     flexDirection: 'row',
     height: 54 + statusBarHeight,
-    elevation: 3,
+    elevation: 1,
     paddingTop: statusBarHeight,
+    borderBottomWidth: 1,
+    borderBottomColor: '#c83f41',
   },
   headerTitle: {
     color: '#fff',

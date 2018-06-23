@@ -19,7 +19,7 @@ class MiniAudioControl extends React.Component<Props> {
   render() {
     const {title, subtitle, status} = this.props;
     return (
-      <LinearGradient colors={['#262630', '#25242e']} style={styles.container}>
+      <LinearGradient colors={['#2e2e39', '#26252f']} style={styles.container}>
         <PlayPauseButton
           status={status}
           onPlayPause={this.props.onPlayPause}
@@ -45,10 +45,12 @@ class MiniAudioControl extends React.Component<Props> {
 const styles = {
   container: {
     flexDirection: 'row',
-    elevation: 3,
+    elevation: 1,
+    borderTopWidth: 1,
+    borderTopColor: '#383842'
   },
   audioTitle: {
-    color: '#a2acbe',
+    color: '#fff',
     fontSize: 14,
     lineHeight: 24,
   },
