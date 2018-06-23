@@ -31,6 +31,10 @@ class CurrentlyPlayingView extends React.Component<Props> {
     navigation.navigate('StationDetail', {id: currentlyPlaying.id});
   };
 
+  handleStop = () => {
+    dispatch.audioPlayer.stop();
+  }
+
   render() {
     const {currentlyPlaying, station} = this.props;
     if (currentlyPlaying.id) {
@@ -40,6 +44,7 @@ class CurrentlyPlayingView extends React.Component<Props> {
           subtitle={station.currentLesson}
           status={currentlyPlaying.status}
           onPlayPause={this.handlePlayPause}
+          onStop={this.handleStop}
           onDetailPress={this.handleDetailPress}
         />
       );

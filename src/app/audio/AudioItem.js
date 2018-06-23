@@ -81,6 +81,7 @@ const styles = {
     backgroundColor: '#fff',
     borderBottomWidth: 0.5,
     borderBottomColor: '#ccc',
+    elevation: 1,
   },
   descriptionArea: {
     flex: 1, 
