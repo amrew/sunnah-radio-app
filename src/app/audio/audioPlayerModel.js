@@ -100,8 +100,11 @@ export default () => {
       },
 
       async stop() {
+        DeviceEventEmitter.removeListener(
+          'RNAudioStreamerStatusChanged',
+          this.changeStatus
+        );
         RNAudioStreamer.pause();
-        DeviceEventEmitter.removeAllListeners();
         this.setActiveAudio(null);
       },
     },

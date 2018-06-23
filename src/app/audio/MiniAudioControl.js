@@ -19,6 +19,7 @@ type Props = {
 class MiniAudioControl extends React.Component<Props> {
   render() {
     const {title, subtitle, status} = this.props;
+    console.log(status);
     return (
       <LinearGradient colors={['#2e2e39', '#26252f']} style={styles.container}>
         <PlayPauseButton status={status} onPlayPause={this.props.onPlayPause} />
