@@ -25,7 +25,7 @@ class PlayPauseButton extends React.Component<Props> {
         style={{justifyContent: 'center'}}>
         <Box>
           {isPlaying || isPaused || isStopped ? (
-            <Icon name={iconName} size={18} color={'#EA9433'} />
+            <Icon name={iconName} size={18} color={'#EDAD61'} />
           ) : isBuffering ? (
             <ActivityIndicator />
           ) : null}

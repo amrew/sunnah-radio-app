@@ -35,7 +35,7 @@ StationNavigator.navigationOptions = ({navigation}) => {
       return (
         <Icon
           name={'md-microphone'}
-          color={focused ? '#29718F' : '#35455C'}
+          color={focused ? '#2f2f3a' : '#35455C'}
           size={24}
         />
       );
@@ -53,7 +53,7 @@ const AppNavigator = createDrawerNavigator(
           return (
             <Icon
               name={'md-settings'}
-              color={focused ? '#29718F' : '#35455C'}
+              color={focused ? '#2f2f3a' : '#35455C'}
               size={24}
             />
           );
@@ -64,7 +64,7 @@ const AppNavigator = createDrawerNavigator(
   {
     contentComponent: DrawerView,
     contentOptions: {
-      activeTintColor: '#29718F',
+      activeTintColor: '#2f2f3a',
       inactiveTintColor: '#35455C',
     },
   }

@@ -79,7 +79,6 @@ class AudioItem extends React.Component<Props> {
 const styles = {
   container: {
     backgroundColor: '#fff',
-    marginBottom: 1,
     borderBottomWidth: 0.5,
     borderBottomColor: '#ccc',
   },
