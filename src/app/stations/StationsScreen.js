@@ -33,6 +33,14 @@ class StationsScreen extends React.Component<Props> {
     this.props.navigation.openDrawer();
   };
 
+  handleNavigateSearch = () => {
+    this.props.navigation.navigate('StationSearch');
+  };
+
+  handleItemPress = (audioID, audioUrl) => {
+    dispatch.audioPlayer.setAudio({audioID, audioUrl});
+  };
+
   render() {
     return (
       <Page>
@@ -46,12 +54,17 @@ class StationsScreen extends React.Component<Props> {
             </Link>
           }
           rightContent={
-            <Box>
-              <Icon name="md-search" color="#FFF" size={24} />
-            </Box>
+            <Link onPress={this.handleNavigateSearch}>
+              <Box>
+                <Icon name="md-search" color="#FFF" size={24} />
+              </Box>
+            </Link>
           }
         />
-        <StationsView onRefresh={this.handleRefreshStations} />
+        <StationsView 
+          onItemPress={this.handleItemPress}
+          onRefresh={this.handleRefreshStations} 
+        />
         <CurrentlyPlayingView />
       </Page>
     );
