@@ -85,7 +85,10 @@ export default (apiClient: axios, storage: Storage) => {
         payload: {shouldRefresh?: boolean} = {},
         rootState: any
       ) {
-        if (rootState.station.status.loaded && !payload.shouldRefresh) {
+        if (
+          (rootState.station.status.loaded && !payload.shouldRefresh) ||
+          rootState.station.status.loading
+        ) {
           return Promise.resolve();
         }
         this.startFetchStations();

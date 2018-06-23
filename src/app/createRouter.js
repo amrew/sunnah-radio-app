@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import DrawerView from './common/DrawerView';
 
 import StationsScreen from './stations/StationsScreen';
+import StationSearchScreen from './stations/StationSearchScreen';
 import StationDetailScreen from './stations/StationDetailScreen';
 import SettingsScreen from './settings/SettingsScreen';
 
@@ -17,6 +18,7 @@ const StationNavigator = createStackNavigator(
     Stations: StationsScreen,
     StationDetail: StationDetailScreen,
     Settings: SettingsScreen,
+    StationSearch: StationSearchScreen,
   },
   {
     headerMode: 'none',
