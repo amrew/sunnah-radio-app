@@ -56,7 +56,7 @@ class Header extends React.Component<Props> {
             centerContent
           ) : (
             <Box flex={1}>
-              <Text style={styles.headerTitle}>{title}</Text>
+              <Text style={styles.headerTitle} numberOfLines={1}>{title}</Text>
             </Box>
           )}
           {rightContent}
