@@ -61,6 +61,7 @@ class StationSearchScreen extends React.Component<Props, States> {
                 onChangeText={this.handleInputChange} 
                 underlineColorAndroid="transparent"
                 style={{color: '#262630'}}
+                placeholder={'Cari radio'}
               />
             </View>
           )}
