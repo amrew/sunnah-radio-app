@@ -23,9 +23,8 @@ class Link extends React.Component<Props> {
     const {to, params, onPress} = this.props;
     if (to) {
       this.props.navigation.navigate(to, params);
-    } else {
-      onPress && onPress(this.props.navigation);
     }
+    onPress && onPress(this.props.navigation);
   };
 
   render() {

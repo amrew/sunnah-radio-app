@@ -62,7 +62,7 @@ class StationsScreen extends React.Component<Props> {
           }
         />
         <StationsView 
-          onItemPress={this.handleItemPress}
+          onPlayAudio={this.handleItemPress}
           onRefresh={this.handleRefreshStations} 
         />
         <CurrentlyPlayingView />

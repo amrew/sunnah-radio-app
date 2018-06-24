@@ -27,14 +27,20 @@ type Props = {
   onRefresh: () => any,
   modal: ModalProps,
   searchKey: ?string,
-  onItemPress: (audioID: string, audioUrl: string) => any,
+  onPlayAudio: (audioID: string, audioUrl: string) => any,
 };
 
 class StationsView extends React.Component<Props> {
   handleReadMore = audioID => {
     const {modal} = this.props;
     const {currentlyPlaying} = this.props;
-    modal.show(<StationDetailModal id={audioID} />);
+    modal.show(
+      <StationDetailModal 
+        id={audioID} 
+        closeModal={modal.close}
+        onPlayAudio={this.props.onPlayAudio}
+      />
+    );
   };
 
   keyExtractor = (item, index) => item.id;
@@ -45,7 +51,7 @@ class StationsView extends React.Component<Props> {
       <AudioItem
         key={item.id}
         item={item}
-        onItemPress={this.props.onItemPress}
+        onItemPress={this.props.onPlayAudio}
         isActive={item.id === currentlyPlaying.id}
         onReadMore={this.handleReadMore}
       />
