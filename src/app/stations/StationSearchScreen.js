@@ -68,7 +68,7 @@ class StationSearchScreen extends React.Component<Props, States> {
         />
         <StationsView 
           searchKey={this.state.searchKey} 
-          onItemPress={this.handleItemPress}
+          onPlayAudio={this.handleItemPress}
         />
       </Page>
     );

@@ -106,7 +106,7 @@ export default (apiClient: axios, storage: Storage) => {
 
 // let's prettify the fields
 const prettifyStationField = (station: any): Station => ({
-  id: station.uid_rad,
+  id: station.id_radet,
   name: station.nama,
   logo: station.logo,
   url: station.url,

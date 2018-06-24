@@ -5,22 +5,72 @@ import {connect} from 'react-redux';
 import type {Station} from './stationModel';
 import AudioItem from '../audio/AudioItem';
 
-import {Box} from '../uikit';
+import {Box, Link, Row, Col, Icon} from '../uikit';
 
 type Props = {
   station: Station,
+  closeModal: (callback: any) => any,
+  onPlayAudio: (audioId: string, audioUrl: string) => any
 };
 
 class StationDetailModal extends React.Component<Props> {
   render() {
     const {station} = this.props;
+    const menus = [
+      {
+        title: 'Putar',
+        icon: 'md-play',
+        onPress: () => {
+          this.props.closeModal(() => {
+            this.props.onPlayAudio(station.id, station.url);
+          });
+        },
+      },
+      {
+        title: 'Lihat Detail',
+        icon: 'md-alert',
+        link: {
+          to: 'StationDetail',
+          params: {id: station.id},
+        },
+        onPress: () => {
+          this.props.closeModal();
+        }
+      },
+      {
+        title: 'Jadikan Favorit',
+        icon: 'md-heart',
+        onPress: () => {
+          this.props.closeModal();
+        }
+      },
+      {
+        title: 'Tutup',
+        icon: 'md-close',
+        onPress: () => {
+          this.props.closeModal();
+        },
+      },
+    ];
     return (
       <View style={styles.container}>
         <AudioItem item={station} />
         <View>
-          <Box>
-            <Text style={styles.actionText}>Jadikan Favorit</Text>
-          </Box>
+          {menus.map((item, index) => (
+            <Link
+              key={index}
+              {...(item.link ? item.link : {})}
+              onPress={item.onPress ? item.onPress : null}>
+              <Row>
+                <Box justifyContent={'center'} alignItems={'center'} width={56}>
+                  <Icon name={item.icon} color={'#888'} size={24} />
+                </Box>
+                <Box justifyContent={'center'}>
+                  <Text style={styles.actionText}>{item.title}</Text>
+                </Box>
+              </Row>
+            </Link>
+          ))}
         </View>
       </View>
     );
@@ -39,24 +89,8 @@ const styles = {
     right: 0,
     overflow: 'hidden',
   },
-  titleText: {
-    color: '#333',
-    fontSize: 16,
-    fontWeight: '500',
-    lineHeight: 24,
-  },
-  subTitle: {
-    color: '#666',
-    fontSize: 14,
-    fontWeight: '400',
-    lineHeight: 20,
-  },
   actionText: {
-    color: '#666',
-  },
-  borderLine: {
-    borderBottomWidth: 0.5,
-    borderBottomColor: '#ccc',
+    color: '#35455C',
   },
 };
 
