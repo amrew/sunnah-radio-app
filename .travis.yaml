@@ -7,3 +7,6 @@ before_install:
 script:
   - yarn install
   - ./release-android-bundle.sh
+branches:
+  only:
+  - master
