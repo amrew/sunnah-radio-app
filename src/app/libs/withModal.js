@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import {View} from 'react-native';
 import Modal from '../uikit/Modal';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 
@@ -26,7 +27,7 @@ const withModal = (Component: any): any => {
   class ComponentWithModal extends React.Component<Props, States> {
     state = {
       isModalVisible: false,
-      childrenNode: null,
+      childrenNode: <View/>,
       modalConfig: defaultModalConfig,
     };
 
@@ -72,15 +73,13 @@ const withModal = (Component: any): any => {
       return (
         <React.Fragment>
           <Component modal={modalApi} {...this.props} />
-          {childrenNode ? (
-            <Modal
-              isModalVisible={isModalVisible}
-              showModal={this.showModal}
-              closeModal={this.closeModal}
-              {...modalConfig}>
-              {childrenNode}
-            </Modal>
-          ) : null}
+          <Modal
+            isModalVisible={isModalVisible}
+            showModal={this.showModal}
+            closeModal={this.closeModal}
+            {...modalConfig}>
+            {childrenNode}
+          </Modal>
         </React.Fragment>
       );
     }

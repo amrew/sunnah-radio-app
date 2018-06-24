@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - "stable"
+before_install:
+  - npm install -g appcenter-cli
+  - appcenter login --token APPCENTER_TOKEN
+script:
+  - yarn install
+  - ./release-android-bundle.sh
