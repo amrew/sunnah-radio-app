@@ -33,6 +33,7 @@ export default () => {
     },
     reducers: {
       changeStatus(prevState: AudioState, status: PlayerStatus): AudioState {
+        if (prevState.currentlyPlaying.status === status) return prevState;
         return {
           ...prevState,
           currentlyPlaying: {
