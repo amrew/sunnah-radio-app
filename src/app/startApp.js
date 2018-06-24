@@ -10,7 +10,8 @@ import axios from 'axios';
 import {Provider} from 'react-redux';
 import Config from 'react-native-config';
 import Storage from 'react-native-storage';
-import { AsyncStorage } from 'react-native';
+import {AsyncStorage} from 'react-native';
+import createRematchPersist from '@rematch/persist';
 
 import createRouter from './createRouter';
 import createModels from './createModels';
@@ -34,12 +35,19 @@ export default () => {
     enableCache: true,
   });
 
+  const persistPlugin = createRematchPersist({
+    whitelist: ['station', 'audioPlayer'],
+    throttle: 5000,
+    version: 1,
+  });
+
   const init = () => {
     const apiClient = createApiClient({
       apiEndpoint: Config.RADIO_API_ENDPOINT,
     });
     const store = initStore({
       models: createModels(apiClient, storage),
+      plugins: [persistPlugin],
     });
     const Router = createRouter({
       onStateChange: (currentRoute, prevRoute) => {
