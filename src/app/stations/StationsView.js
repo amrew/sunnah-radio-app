@@ -8,7 +8,7 @@ import {dispatch} from '@rematch/core';
 import {connect} from 'react-redux';
 import Fuse from 'fuse.js';
 
-import {SectionTitle} from '../uikit';
+import {SectionTitle, Link} from '../uikit';
 import type {FetchingState} from '../common/types';
 import type {Stations, Station} from './stationModel';
 import type {CurrentlyPlaying} from '../audio/audioPlayerModel';
@@ -35,8 +35,8 @@ class StationsView extends React.Component<Props> {
     const {modal} = this.props;
     const {currentlyPlaying} = this.props;
     modal.show(
-      <StationDetailModal 
-        id={audioID} 
+      <StationDetailModal
+        id={audioID}
         closeModal={modal.close}
         onPlayAudio={this.props.onPlayAudio}
       />
@@ -99,9 +99,14 @@ class StationsView extends React.Component<Props> {
           <React.Fragment>
             {sectionTitle}
             {station.status.error && (
-              <View key={'error'} style={styles.rowHeadLight}>
-                <Text style={styles.textHeadLight}>Error...</Text>
-              </View>
+              <Link
+                onPress={this.props.onRefresh}
+                key={'error'}
+                style={styles.errorContainer}>
+                <Text style={styles.errorText}>
+                  Maaf, radio tidak dapat dimuat.
+                </Text>
+              </Link>
             )}
           </React.Fragment>
         )}
@@ -116,33 +121,17 @@ class StationsView extends React.Component<Props> {
 }
 
 const styles = {
-  rowHead: {
-    padding: 24,
-    backgroundColor: '#212121',
-  },
-  textHead: {
-    color: '#FFF',
-    fontSize: 16,
-  },
-
-  rowHeadLight: {
+  errorContainer: {
     padding: 24,
     flexDirection: 'row',
     backgroundColor: '#ccc',
   },
-  textHeadLight: {
-    color: '#333',
-    fontSize: 16,
+  errorText: {
+    color: '#e45756',
+    fontSize: 14,
     fontWeight: '500',
     letterSpacing: 0.6,
     lineHeight: 24,
-  },
-  subTitle: {
-    color: '#444',
-    fontSize: 14,
-    fontWeight: '400',
-    letterSpacing: 0.8,
-    lineHeight: 21,
   },
 };
 
