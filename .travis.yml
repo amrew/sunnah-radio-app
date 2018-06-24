@@ -4,6 +4,7 @@ node_js:
 before_install:
   - npm install -g appcenter-cli
   - appcenter login --token $APPCENTER_TOKEN
+  - chmod +x release-android-bundle.sh
 script:
   - yarn install
   - ./release-android-bundle.sh
