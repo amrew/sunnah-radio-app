@@ -8,6 +8,7 @@ export default (apiSettings: {apiEndpoint: string}) => {
   instance.defaults.timeout = 5000;
   instance.interceptors.response.use(
     response => {
+      console.log(response);
       return response.data;
     },
     error => {

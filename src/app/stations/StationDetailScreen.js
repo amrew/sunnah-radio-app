@@ -19,6 +19,10 @@ type Props = {
 };
 
 class StationDetailScreen extends React.Component<Props> {
+  static async getInitialState(route) {
+    return dispatch.station.fetchStations();
+  }
+
   render() {
     const {navigation} = this.props;
     const stationId = navigation.getParam('id');

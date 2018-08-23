@@ -43,7 +43,7 @@ class StationsView extends React.Component<Props> {
     );
   };
 
-  keyExtractor = (item, index) => item.id;
+  keyExtractor = (item, index) => item.uuid;
 
   renderItem = ({item}: {item: Station}) => {
     const {currentlyPlaying} = this.props;
@@ -63,8 +63,9 @@ class StationsView extends React.Component<Props> {
     const searcMode = typeof searchKey !== 'undefined';
 
     const sectionTitle = !searcMode && <SectionTitle title="SEMUA RADIO" />;
+    const alreadyHasItems = station.items && station.items.length > 0;
 
-    if (!station.status.loaded) {
+    if (!station.status.loaded && !alreadyHasItems) {
       return (
         <View>
           {sectionTitle}
