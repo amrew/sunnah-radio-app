@@ -17,6 +17,9 @@ import createRouter from './createRouter';
 import createModels from './createModels';
 import createApiClient from './createApiClient';
 
+import {PersistGate} from 'redux-persist/es/integration/react';
+import {getPersistor} from '@rematch/persist';
+
 console.ignoredYellowBox = ['Warning: isMounted', 'Remote debugger'];
 
 type AppProps = {};
@@ -38,7 +41,7 @@ export default () => {
   const persistPlugin = createRematchPersist({
     whitelist: ['station', 'audioPlayer'],
     throttle: 5000,
-    version: 1,
+    version: 2,
   });
 
   const init = () => {
@@ -70,9 +73,12 @@ export default () => {
 
     render() {
       const {Router} = this.state;
+      const persistor = getPersistor();
       return (
         <Provider store={this.state.store}>
-          <Router />
+          <PersistGate persistor={persistor} loading={null}>
+            <Router />
+          </PersistGate>
         </Provider>
       );
     }
