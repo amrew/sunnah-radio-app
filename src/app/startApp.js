@@ -11,14 +11,14 @@ import {Provider} from 'react-redux';
 import Config from 'react-native-config';
 import Storage from 'react-native-storage';
 import {AsyncStorage} from 'react-native';
-import createRematchPersist from '@rematch/persist';
-
-import createRouter from './createRouter';
-import createModels from './createModels';
-import createApiClient from './createApiClient';
-
+import createRematchPersist, {getPersistor} from '@rematch/persist';
 import {PersistGate} from 'redux-persist/es/integration/react';
-import {getPersistor} from '@rematch/persist';
+
+import createRouter from './libs/createRouter';
+import createApiClient from './libs/createApiClient';
+
+import createModels, {persistenWhitelist} from './createModels';
+import AppNavigator from './AppNavigator';
 
 console.ignoredYellowBox = ['Warning: isMounted', 'Remote debugger'];
 
@@ -39,20 +39,21 @@ export default () => {
   });
 
   const persistPlugin = createRematchPersist({
-    whitelist: ['station', 'audioPlayer'],
+    whitelist: persistenWhitelist,
     throttle: 5000,
     version: 2,
   });
 
   const init = () => {
     const apiClient = createApiClient({
-      apiEndpoint: Config.RADIO_API_ENDPOINT,
+      apiEndpoint: Config.API_ENDPOINT,
     });
     const store = initStore({
       models: createModels(apiClient, storage),
       plugins: [persistPlugin],
     });
     const Router = createRouter({
+      AppNavigator,
       onStateChange: (currentRoute, prevRoute) => {
         const {screen} = currentRoute;
         const getInitialState: (any, any) => any =
